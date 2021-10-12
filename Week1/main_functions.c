@@ -8,19 +8,22 @@ Node acc_register(Node head){
 
     do {
         printf("Enter username: ");
-        scanf("%s", usrname); 
-        if (lookupByUsrname(head, usrname)) printf("Exit");
-    } while (lookupByUsrname(head, usrname));
+        fflush(stdin);
+        gets(usrname); 
+        if (lookupByUsrname(head, usrname)) 
+            printf("Account existed. Please enter again! \n");
+        if (strchr(usrname, ' ')) 
+            printf("Invalid username. Pleasr enter again! \n");
+    } while (lookupByUsrname(head, usrname) || strchr(usrname, ' '));
     
-
-
     printf("Enter password: ");
+    fflush(stdin);
     scanf("%s", pwd);
 
     newAcc = createAcc(usrname, pwd, 2);
     head = addTail(head, newAcc);
 
-    writeToFile(head); 
+    writeToFile(head);
 
     return head;
 }
