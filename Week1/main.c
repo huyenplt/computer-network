@@ -29,6 +29,7 @@ int main() {
                 break;
             case 2:
                 printf("**** 2. Activate ***\n\n");
+                activate_acc(head);
                 break;
             case 3:
                 printf("**** 3. Sign in ***\n\n");

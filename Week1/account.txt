@@ -1,17 +1,4 @@
 hedspi1 hedpsi2016 0
 hust hust12345 1
 soict soictfit 1
-huyen 1 2
-huyen1 123 2
-minh huyen 2
-hieu 12 2
-minhanh 123 2
-minhlan 12 2
-minhlan 2 2
-minhlan 2 2
-mai 1 2
-mai lan 1
-2 lan 1
-0 2 1
-huyen3 123 2
-3 3 2
+
