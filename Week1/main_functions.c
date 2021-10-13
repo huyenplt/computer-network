@@ -2,6 +2,8 @@
 
 #define ACTIVATION_CODE "20184124"
 
+int is_logged = 1;
+
 // funtion 1 : Register
 Node acc_register(Node head){
     account newAcc;
@@ -78,14 +80,43 @@ Node activate_acc(Node head) {
 
     if (block_count >= 5) {
         printf("You've entered incorrect code more than 4 times. Account is blocked\n");
-        tmp->acc.status = 0;
-        
+        tmp->acc.status = 0; 
     }
+
     else {
         tmp->acc.status = 1;
-        printf("Account is activated");
+        printf("Account is activated\n");
     }
     writeToFile(head);
+    return head;
+}
+
+// function 3 : Sign in
+Node signIn(Node head) {
+    char pwd[30];
+    int block_count = 0;
+
+    Node tmp = existedAcc(head);
+
+    do {
+        printf("Enter password: ");
+        fflush(stdin);
+        gets(pwd);
+        if(strcmp(tmp->acc.password, pwd)) {
+            printf("Password is incorrect! Try again\n");
+            block_count++;
+        }
+    } while (strcmp(tmp->acc.password, pwd) && (block_count <= 3));
+
+    if (block_count >= 4) {
+        printf("You've entered incorrect password more than 3 times. Account is blocked\n");
+        tmp->acc.status = 0; 
+        writeToFile(head);
+    }
+    
+    else {
+        printf("Logged in successfully!\n Hi, %s!", tmp->acc.username);
+    }
     return head;
 }
 
