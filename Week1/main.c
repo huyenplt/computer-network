@@ -5,6 +5,7 @@
 int main() {
     Node head = initHead();
     head = readFile(head);
+    char signedIn_usrname[30];
     int choice;
     do {
         // system("cls");
@@ -33,7 +34,7 @@ int main() {
                 break;
             case 3:
                 printf("**** 3. Sign in ***\n\n");
-                head = signIn(head);
+                head = signIn(head, signedIn_usrname);
                 break;
             case 4:
                 printf("**** 4. Search ***\n\n");
@@ -41,6 +42,7 @@ int main() {
                 break;
             case 5:
                 printf("**** 5. Change password ***\n\n");
+                head = changePwd(head, signedIn_usrname);
                 break;
             case 6:
                 printf("**** 6. Sign out ***\n\n");
