@@ -4,6 +4,27 @@
 
 int is_logged = 1;
 
+void delChar(char s[], int position) {
+	int length = strlen(s);
+    for(int i = position; i < length; i++)
+        s[i] = s[i+1];
+	s[length - 1] = '\0'; 
+}
+
+void delSpace(char *s) {
+    for(int i = 0; i < strlen(s); i++) {
+		if(s[i] == ' ' && s[i+1] == ' ') {
+			delChar(s, i);
+			i--;
+		}
+    }
+    if(s[0] == ' ')
+		delChar(s, 0); // xoá đầu
+
+    if(s[strlen(s)-1] == ' ')
+		delChar(s, strlen(s)-1); // xoá cuối
+}
+
 // funtion 1 : Register
 Node acc_register(Node head){
     account newAcc;
@@ -13,7 +34,8 @@ Node acc_register(Node head){
     do {
         printf("Enter username: ");
         fflush(stdin);
-        gets(usrname); 
+        gets(usrname);
+        delSpace(usrname);
         if (lookupByUsrname(head, usrname)) 
             printf("Account existed. Please enter again! \n");
         if (strchr(usrname, ' ')) 
@@ -22,7 +44,7 @@ Node acc_register(Node head){
     
     printf("Enter password: ");
     fflush(stdin);
-    scanf("%s", pwd);
+    gets(pwd);
 
     newAcc = createAcc(usrname, pwd, 2);
     head = addTail(head, newAcc);
