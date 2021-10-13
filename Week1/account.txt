@@ -1,4 +1,5 @@
 hedspi1 hedpsi2016 0
 hust hust123 0
 soict soictfit 1
-huyen 1 2
+huyen 2 2
+minhanh huyen 0
