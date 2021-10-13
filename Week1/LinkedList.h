@@ -2,9 +2,11 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define INFO_LENGTH 30
+
 struct Account {
-    char username[30];
-    char password[30];
+    char username[INFO_LENGTH];
+    char password[INFO_LENGTH];
     int status;
 };
 typedef struct Account account;

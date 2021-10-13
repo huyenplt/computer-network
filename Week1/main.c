@@ -1,11 +1,9 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include "main_functions.h"
 
 int main() {
     Node head = initHead();
     head = readFile(head);
-    char signedIn_usrname[30];
+    char signedIn_usrname[INFO_LENGTH];
     int choice;
     do {
         // system("cls");
@@ -22,11 +20,7 @@ int main() {
         switch (choice) {
             case 1:
                 printf("**** 1. Register ***\n\n");
-
                 head = acc_register(head);
-                // for(Node p = head; p != NULL; p = p->next){
-                //     printf("%s\n", p->acc.username);
-                // }
                 break;
             case 2:
                 printf("**** 2. Activate ***\n\n");
@@ -46,9 +40,10 @@ int main() {
                 break;
             case 6:
                 printf("**** 6. Sign out ***\n\n");
+                signOut(signedIn_usrname);
                 break;
             default: 
-                printf("hihi\n");
+                printf("Good bye!\n");
         }
     } while (choice > 0 && choice < 7);
 }

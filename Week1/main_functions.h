@@ -5,3 +5,4 @@ Node activate_acc(Node head);
 Node signIn(Node head, char *username);
 void search_acc(Node head);
 Node changePwd(Node head, char *usrname);
+void signOut(char *usrname);

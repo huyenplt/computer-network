@@ -30,14 +30,12 @@ void delSpace(char *s)
 }
 
 // funtion 1 : Register
-Node acc_register(Node head)
-{
+Node acc_register(Node head) {
     account newAcc;
-    char usrname[30];
-    char pwd[30];
+    char usrname[INFO_LENGTH];
+    char pwd[INFO_LENGTH];
 
-    do
-    {
+    do {
         printf("Enter username: ");
         fflush(stdin);
         gets(usrname);
@@ -54,37 +52,18 @@ Node acc_register(Node head)
 
     newAcc = createAcc(usrname, pwd, 2);
     head = addTail(head, newAcc);
-
+    
+    printf("Successful registration. Activation required.\n");
     writeToFile(head);
 
     return head;
 }
 
-// existed account
-Node existedAcc(Node head)
-{
-    char usrname[30];
-    Node tmp = NULL;
-
-    do
-    {
-        printf("Enter username: ");
-        fflush(stdin);
-        gets(usrname);
-        tmp = lookupByUsrname(head, usrname);
-        if (!tmp)
-            printf("Cannot find account. Try again!\n");
-
-    } while (tmp == NULL);
-
-    return tmp;
-}
-
 // function 2 : Activate account
 Node activate_acc(Node head)
 {
-    char usrname[30];
-    char pwd[30];
+    char usrname[INFO_LENGTH];
+    char pwd[INFO_LENGTH];
     char code[8];
     int block_count = 0;
 
@@ -140,9 +119,13 @@ Node activate_acc(Node head)
 }
 
 // function 3 : Sign in
-Node signIn(Node head, char *usrname)
-{
-    char pwd[30];
+Node signIn(Node head, char *usrname) {
+    if (signedIn) {
+        printf("You've already signed in! You have to sign out first!\n");
+        return NULL;
+    }
+
+    char pwd[INFO_LENGTH];
     int block_count = 0;
 
     Node tmp = NULL;
@@ -186,15 +169,16 @@ Node signIn(Node head, char *usrname)
 }
 
 // Function 4: Search
-void search_acc(Node head)
-{
+void search_acc(Node head) {
     if (!signedIn)
         printf("You're not signed in. \nYou need to sign in first!\n");
+
     else {
-        char usrname[30];
+        char usrname[INFO_LENGTH];
+        char strStatus[8];
         Node tmp = NULL;
-        do
-        {
+
+        do {
             printf("Enter username: ");
             fflush(stdin);
             gets(usrname);
@@ -204,21 +188,34 @@ void search_acc(Node head)
 
         } while (tmp == NULL);
 
+        switch (tmp->acc.status) {
+        case 0:
+            strcpy(strStatus, "blocked");
+            break;
+        case 1: 
+            strcpy(strStatus, "active");
+            break;
+        case 2: 
+            strcpy(strStatus, "idle");
+            break;
+        default:
+            break;
+        }
+
         printf("Account found!\n");
-        printf("Username: %s\nStatus: %d\n", tmp->acc.username, tmp->acc.status);
+        printf("Account '%s' is %s\n", tmp->acc.username, strStatus);
     }
 }
 
 // Function 5: Change password
-Node changePwd(Node head, char *usrname)
-{
+Node changePwd(Node head, char *usrname) {
     if (!signedIn) {
         printf("You're not signed in. \nYou need to sign in first!\n");
         return NULL;
     }
     else {
-        char pwd[30];
-        char newPwd[30];
+        char pwd[INFO_LENGTH];
+        char newPwd[INFO_LENGTH];
 
         Node tmp = lookupByUsrname(head, usrname);
 
@@ -239,5 +236,24 @@ Node changePwd(Node head, char *usrname)
         writeToFile(head);
         printf("Password is changed!\n");
         return head;
+    }
+}
+
+// Function 6: sign out
+void signOut(char *usrname) {
+    if (!signedIn) {
+        printf("You're not signed in. \nYou need to sign in first!\n");
+    }
+    else {
+        char usrnameInput[INFO_LENGTH];
+        do {
+            printf("Enter your username: ");
+            fflush(stdin);
+            gets(usrnameInput);
+            if(strcmp(usrnameInput, usrname))
+                printf("Incorrect username! Please try again!\n");
+        } while (strcmp(usrnameInput, usrname));
+        printf("Goodbye, %s!", usrname);
+        signedIn = 0;
     }
 }

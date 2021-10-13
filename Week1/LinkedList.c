@@ -60,8 +60,8 @@ void writeToFile(Node head) {
 
 Node readFile(Node head) {
     FILE* fp = fopen("account.txt", "r");
-    char username[30];
-    char password[30];
+    char username[INFO_LENGTH];
+    char password[INFO_LENGTH];
     int status;
     while (!feof(fp)) {
         fscanf(fp, "%s %s %d\n", username, password, &status);
