@@ -2,7 +2,7 @@
 
 #define ACTIVATION_CODE "20184124"
 
-int is_logged = 1;
+int signedIn = 0;
 
 void delChar(char s[], int position) {
 	int length = strlen(s);
@@ -137,8 +137,20 @@ Node signIn(Node head) {
     }
     
     else {
-        printf("Logged in successfully!\n Hi, %s!", tmp->acc.username);
+        printf("Logged in successfully!\nHi, %s!", tmp->acc.username);
+        signedIn = 1;
     }
     return head;
+}
+
+// Function 4: Search
+void search_acc(Node head) {
+    if (!signedIn) 
+        printf("You're not signed in. \nYou need to sign in first!\n");
+    else {
+        Node tmp = existedAcc(head);
+        printf("Account found!\n");
+        printf("Username: %s\nStatus: %d\n", tmp->acc.username, tmp->acc.status);
+    }
 }
 

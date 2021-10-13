@@ -37,6 +37,7 @@ int main() {
                 break;
             case 4:
                 printf("**** 4. Search ***\n\n");
+                search_acc(head);
                 break;
             case 5:
                 printf("**** 5. Change password ***\n\n");
