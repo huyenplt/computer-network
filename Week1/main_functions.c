@@ -36,7 +36,7 @@ Node acc_register(Node head) {
     char pwd[INFO_LENGTH];
 
     do {
-        printf("Enter username: ");
+        printf("\nEnter username: ");
         fflush(stdin);
         gets(usrname);
         delSpace(usrname);
@@ -53,7 +53,7 @@ Node acc_register(Node head) {
     newAcc = createAcc(usrname, pwd, 2);
     head = addTail(head, newAcc);
     
-    printf("Successful registration. Activation required.\n");
+    printf("\nSuccessful registration. Activation required.\n");
     writeToFile(head);
 
     return head;
@@ -71,12 +71,12 @@ Node activate_acc(Node head)
 
     do
     {
-        printf("Enter username: ");
+        printf("\nEnter username: ");
         fflush(stdin);
         gets(usrname);
         tmp = lookupByUsrname(head, usrname);
         if (!tmp)
-            printf("Cannot find account. Try again!\n");
+            printf("\nCannot find account. Please try again!\n");
 
     } while (tmp == NULL);
 
@@ -87,7 +87,7 @@ Node activate_acc(Node head)
         gets(pwd);
         if (strcmp(tmp->acc.password, pwd))
         {
-            printf("Password is incorrect! Try again\n");
+            printf("\nPassword is incorrect! Please try again\n");
         }
     } while (strcmp(tmp->acc.password, pwd));
 
@@ -98,21 +98,21 @@ Node activate_acc(Node head)
         gets(code);
         if (strcmp(code, ACTIVATION_CODE))
         {
-            printf("Activation code is incorrect! Try again.\n");
+            printf("\nActivation code is incorrect! Please try again.\n");
             block_count++;
         }
     } while ((strcmp(code, ACTIVATION_CODE)) && (block_count <= 4));
 
     if (block_count >= 5)
     {
-        printf("You've entered incorrect code more than 4 times. Account is blocked\n");
+        printf("\nYou've entered incorrect code more than 4 times. Account is blocked\n");
         tmp->acc.status = 0;
     }
 
     else
     {
         tmp->acc.status = 1;
-        printf("Account is activated\n");
+        printf("\nAccount is activated!\n");
     }
     writeToFile(head);
     return head;
@@ -121,8 +121,8 @@ Node activate_acc(Node head)
 // function 3 : Sign in
 Node signIn(Node head, char *usrname) {
     if (signedIn) {
-        printf("You've already signed in! You have to sign out first!\n");
-        return NULL;
+        printf("\nYou've already signed in! You have to sign out first!\n");
+        return head;
     }
 
     char pwd[INFO_LENGTH];
@@ -132,12 +132,12 @@ Node signIn(Node head, char *usrname) {
 
     do
     {
-        printf("Enter username: ");
+        printf("\nEnter username: ");
         fflush(stdin);
         gets(usrname);
         tmp = lookupByUsrname(head, usrname);
         if (!tmp)
-            printf("Cannot find account. Try again!\n");
+            printf("\nCannot find account. Please try again!\n");
 
     } while (tmp == NULL);
 
@@ -148,7 +148,7 @@ Node signIn(Node head, char *usrname) {
         gets(pwd);
         if (strcmp(tmp->acc.password, pwd))
         {
-            printf("Password is incorrect! Try again\n");
+            printf("Password is incorrect! Please try again\n");
             block_count++;
         }
     } while (strcmp(tmp->acc.password, pwd) && (block_count <= 3));
@@ -162,7 +162,7 @@ Node signIn(Node head, char *usrname) {
 
     else
     {
-        printf("Logged in successfully!\nHi, %s!", tmp->acc.username);
+        printf("Logged in successfully!\nHi, %s!\n", tmp->acc.username);
         signedIn = 1;
     }
     return head;
@@ -184,7 +184,7 @@ void search_acc(Node head) {
             gets(usrname);
             tmp = lookupByUsrname(head, usrname);
             if (!tmp)
-                printf("Cannot find account. Try again!\n");
+                printf("Cannot find account. Please try again!\n");
 
         } while (tmp == NULL);
 
@@ -210,8 +210,8 @@ void search_acc(Node head) {
 // Function 5: Change password
 Node changePwd(Node head, char *usrname) {
     if (!signedIn) {
-        printf("You're not signed in. \nYou need to sign in first!\n");
-        return NULL;
+        printf("\nYou're not signed in. \nYou need to sign in first!\n");
+        return head;
     }
     else {
         char pwd[INFO_LENGTH];
@@ -226,7 +226,7 @@ Node changePwd(Node head, char *usrname) {
             fflush(stdin);
             gets(pwd);
             if (strcmp(tmp->acc.password, pwd)) 
-                printf("Password is incorrect! Try again\n");
+                printf("Password is incorrect! Please try again\n");
         } while (strcmp(tmp->acc.password, pwd));
 
         printf("Enter new password: ");
@@ -247,13 +247,13 @@ void signOut(char *usrname) {
     else {
         char usrnameInput[INFO_LENGTH];
         do {
-            printf("Enter your username: ");
+            printf("\nEnter your username: ");
             fflush(stdin);
             gets(usrnameInput);
             if(strcmp(usrnameInput, usrname))
                 printf("Incorrect username! Please try again!\n");
         } while (strcmp(usrnameInput, usrname));
-        printf("Goodbye, %s!", usrname);
+        printf("\nGoodbye, %s!\n", usrname);
         signedIn = 0;
     }
 }
