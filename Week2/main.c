@@ -12,15 +12,11 @@ int isIPAdrr(char* param2) {
     token = strtok(string, ".");
 
     while (token) {
-        if(atoi(token) < 0 || atoi(token) > 255)
+        if(atoi(token) == 0)
             return 0;
 
         token = strtok(NULL, ".");
-
-        count++;
     }
-    if(count != 4) 
-        return 0;
     
     return 1;
 }
