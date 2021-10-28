@@ -41,12 +41,12 @@ int main(int argc, char** argv) {
         host = gethostbyaddr(&in, sizeof(in), AF_INET);
         if(host) {
             printf("\n---------------------\n");
-            printf("Domain name : %s \n",host->h_name);
+            printf("Domain name : %s \n", host->h_name);
             int i = 0;
             if(host->h_aliases[i]) 
                 printf("Alias name: \n");
             while (host->h_aliases[i]) {
-                printf("\t%s\n",host->h_aliases[i]);
+                printf("\t%s\n", host->h_aliases[i]);
                 i++;
             }
         }
@@ -68,7 +68,7 @@ int main(int argc, char** argv) {
             if(host->h_addr_list[i]) 
                 printf("Alias IP: \n");
             while (host->h_addr_list[i]) {
-                printf("\t%s\n",host->h_addr_list[i]);
+                printf("\t%s\n", inet_ntoa(*(struct in_addr*)host->h_addr_list[i]));
                 i++;
             }
         }
