@@ -17,9 +17,22 @@ int isValidPasswordStr(char *pwdStr) {
     return 1;
 }
 
+int isValidPort(char *str) {
+	int i;
+	for(i = 0 ; i < strlen(str) ; i++) {
+		if(str[i] < 48 || str[i] > 57) 
+		     return 0;
+	}
+	return 1;
+}
+
 int main(int argc, char *argv[]) {
 	if (argc != 2) {
 		printf("Invalid format!\nPlease enter follow format ./server port\n");
+		return 0;
+	}
+	if (!isValidPort(argv[1])) {
+		printf("Invalid port. Port must be digit. Please try again\n");
 		return 0;
 	}
 	int server_port = atoi(argv[1]);
@@ -128,12 +141,14 @@ int main(int argc, char *argv[]) {
 			else {
 				if (strcmp(buff, "bye") == 0) {
 					strcpy(buff, "bye, ");
-					strcat(buff, tmp->acc.username);
+					strcpy(username, tmp->acc.username);
+					username[strlen(username)] = '\n';
+					strcat(buff, username);
 					loginStatus = 0;
 				}
 				else {
 					if (isValidPasswordStr(buff) == 0)
-						strcpy(buff, "ERROR: Invalid password. Password must be alpha or digit");
+						strcpy(buff, "ERROR: Invalid password. Password must be alpha or digit\n");
 					else {
 						strcpy(tmp->acc.password, buff);
 						memset(strAlpha, 0, sizeof(strAlpha));
@@ -149,10 +164,12 @@ int main(int argc, char *argv[]) {
 								k++;
 							}
 							strAlpha[j + 1] = '\n';
+							strDigit[k + 1] = '\n';
 
 						}
 						strcat(strAlpha, strDigit);
-						strcpy(buff, strAlpha);
+						strcpy(buff, "Password changed! Encode password: \n");
+						strcat(buff, strAlpha);
 						// strcat(buff, strDigit);
 
 						writeToFile(head);

@@ -5,6 +5,24 @@
 #include <sys/socket.h>
 #define MAXLINE 80
 
+int isValidPort(char *str) {
+	int i;
+	for(i = 0 ; i < strlen(str) ; i++) {
+		if(str[i] < 48 || str[i] > 57) 
+		     return 0;
+	}
+	return 1;
+}
+
+int isValidIpAddr(char *str)
+{
+    struct sockaddr_in sa;
+    int result = inet_pton(AF_INET, str, &(sa.sin_addr));
+    if (result != 0)
+        return 1;
+    return 0;
+}
+
 void func(int sockfd) {
 	char buff[MAXLINE];
 	int n;
@@ -30,6 +48,16 @@ int main(int argc, char *argv[]) {
         printf("Invalid format!\nPlease enter follow format ./client IPAddress port\n");
         return 0;
     }
+
+	if(!isValidIpAddr(argv[1])) {
+        printf("Invalid Address! Please try again\n");
+        return 0;
+    }
+
+	if (!isValidPort(argv[2])) {
+		printf("Invalid port. Port must be digit. Please try again\n");
+		return 0;
+	}
 	int server_port = atoi(argv[2]);
 	
 	int sockfd, connfd;
